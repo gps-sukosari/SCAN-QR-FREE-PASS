@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>QR System</title>
+</head>
+<body>
+  <h2>QR Generator</h2>
+  <button onclick="gen()">Generate</button>
+  <br><br>
+  <img id="qr" width="200">
+  <p id="link"></p>
+
+  <script>
+    async function gen() {
+      const res = await fetch("/api/generate");
+      const data = await res.json();
+
+      document.getElementById("qr").src = data.qr;
+
+      const verifyUrl = `${location.origin}/api/verify?${data.data}`;
+      document.getElementById("link").innerText = verifyUrl;
+    }
+  </script>
+</body>
+</html>
